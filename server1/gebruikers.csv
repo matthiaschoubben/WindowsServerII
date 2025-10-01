@@ -1,0 +1,5 @@
+Voornaam;Achternaam;Initialen;Gebruikersnaam;Password;OU
+Matthias;Schoubben;MS;Matthias;Password123;OU=Domain Admin,DC=ws2-25-matthias,DC=hogent
+Gilles;De Meerler;GDM;Gilles;Password123;OU=Domain Admin,DC=ws2-25-matthias,DC=hogent
+Cristiano;Ronaldo;CR;Ronaldo;Password123;OU=Domain User,DC=ws2-25-matthias,DC=hogent
+Lionel;Messi;LM;Messi;Password123;OU=Domain User,DC=ws2-25-matthias,DC=hogent

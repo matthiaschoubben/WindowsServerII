@@ -1,5 +1,6 @@
+# Config DHCP, DNS, AD
+
 # Varibles
-Write-Host "Setting varibles."
 $GW = "192.168.25.1"
 $IP = "192.168.25.11"
 $IP2 = "192.168.25.21"
@@ -10,16 +11,15 @@ $NAME = "ws2-25-matthias.hogent"
 # Authorize DHCP server in AD
 Write-Output "Authorizing DHCP Server in the domain controller."
 Add-DhcpServerInDC -DnsName $NAME -IPAddress $IP
-Write-Output "DHCP server autorized successfully."
+Write-Output "DHCP server authorized successfully."
 
 # Configure DHCP
 Write-Host "Configuring DHCP."
-Add-DhcpServerv4Scope -Name "IPScope" -StartRange "192.168.25.101" -EndRange "192.168.25.150" -SubnetMask "255.255.255.0" -State Active
-Add-DhcpServerv4ExclusionRange -ScopeId $RANGE -StartRange "192.168.25.151" -EndRange "192.168.25.200"
+Add-DhcpServerv4Scope -Name "IPScope" -StartRange "192.168.25.50" -EndRange "192.168.25.150" -SubnetMask "255.255.255.0" -State Active
 Set-DhcpServerv4OptionValue -ScopeId $RANGE -OptionId 3 -Value $GW
 Set-DhcpServerv4OptionValue -ScopeId $RANGE -OptionId 6 -Value $IP, $IP2
 Set-DhcpServerv4OptionValue -ScopeId $RANGE -OptionId 15 -Value $NAME
-Write-Output "DHCP configuration completeed sucessfully."
+Write-Output "DHCP configuration completed sucessfully."
 
 # Configure DNS
 Write-Host "Configuring DNS and records."
@@ -55,7 +55,7 @@ Write-Host "Organizational Unit 'Domain Users' created."
 
 # Configure users
 Write-Host "Add users to the OU."
-$GEBRUIKERS = Import-Csv "C:\Users\administrator\shared_folder\gebruikers.csv" -Delimiter ";"
+$GEBRUIKERS = Import-Csv "Z:\server1\gebruikers.csv" -Delimiter ";"
 
 foreach ($GEBRUIKER in $GEBRUIKERS) {
     $FIRSTNAME = $GEBRUIKER.Voornaam

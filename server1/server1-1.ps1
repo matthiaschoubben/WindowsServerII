@@ -1,6 +1,6 @@
 # IP instellen en Shared folder copyen
 
-# Variabelen
+# Variables
 $IFNAME = "Ethernet 2"
 $GW = "192.168.25.1"
 $IP = "192.168.25.11"

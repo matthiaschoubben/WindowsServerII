@@ -29,3 +29,4 @@ Write-Output "All required packages installed successfully."
 
 # Reboot
 Write-Host "Rebooting system to apply changes."
+Restart-Computer -Force

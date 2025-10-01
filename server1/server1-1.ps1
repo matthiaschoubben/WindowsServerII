@@ -24,5 +24,8 @@ Write-Host "Shared folder successfully copied to $LOCALPATH."
 
 # Install required packages
 Write-Host "Installing required Windows features."
-Install-WindowsFeature -Name DHCP, AD-Domain-Services, DNS, CA -IncludeManagementTools
+Install-WindowsFeature -Name DHCP, AD-Domain-Services, DNS -IncludeManagementTools
 Write-Output "All required packages installed successfully."
+
+# Reboot
+Write-Host "Rebooting system to apply changes."

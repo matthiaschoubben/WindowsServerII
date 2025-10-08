@@ -3,9 +3,15 @@
 # Variables
 $IFNAME = "Ethernet 2"
 $NAME = "ws2-25-matthias.hogent"
-$CREDENTIAL = New-Object System.Management.Automation.PSCredential("$USERNAME@$NAME", $SECUREPASS)
+$USER = "Matthias"
+$PASS = "Password123"
+$SECUREPASS = ConvertTo-SecureString $PASS -AsPlainText -Force
+$CREDENTIAL = New-Object System.Management.Automation.PSCredential("$USER@$NAME", $SECUREPASS)
 $SF = "C:\vagrant"
 $LOCALPATH = "C:\Users\Public\shared_folder"
+
+# Turn off firewall
+netsh advfirewall set all profiles state off
 
 # IP via DHCP
 Write-Output "Configuring DHCP settings..."

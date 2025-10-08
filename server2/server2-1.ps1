@@ -28,6 +28,9 @@ Write-Host "Installing required Windows features."
 Install-WindowsFeature -Name DNS -IncludeManagementTools
 Write-Output "All required packages installed successfully."
 
+# Turn off firewall
+netsh advfirewall set all profiles state off
+
 # Reboot
 Write-Host "Rebooting system to apply changes."
 Restart-Computer -Force

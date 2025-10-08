@@ -7,8 +7,8 @@ $PASS = "Password123"
 # Promote to dc
 Write-Output "Promoting server1 to domain controller"
 Install-ADDSForest -DomainName $NAME `
-    -ForestMode WinThreshold `
-    -DomainMode WinThreshold `
+    -ForestMode Windows2025Domain `
+    -DomainMode Windows2025Forest `
     -InstallDns `
     -SafeModeAdministratorPassword (ConvertTo-SecureString $PASS -AsPlainText -Force) `
     -Force

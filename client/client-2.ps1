@@ -1,5 +1,8 @@
 # Install RSAT and SQL SSMS
 
+Copy-Item "Z:\SSMS-Setup-ENU.exe" "C:\SSMS-Setup-ENU.exe"
+$SSMSInstallerPath = "C:\SSMS-Setup-ENU.exe"
+
 # Installing RSAT tools
 Write-Host "Starting RSAT management tools installation..."
 $RSATFeatures = @(

@@ -1,4 +1,4 @@
-# Config DHCP, DNS, AD
+# Config DHCP, DNS, AD, CA
 
 # runas /user:ws2-25-matthias\Administrator
 
@@ -82,3 +82,15 @@ foreach ($GEBRUIKER in $GEBRUIKERS) {
         Write-Output "User '$USERNAME' already exists."
     }
 }
+
+# Configure Certification Authority
+Install-WindowsFeature -Name ADCS-Cert-Authority, ADCS-Web-Enrollment -IncludeManagementTools
+Write-Host "Configuring Certification Authority."
+Install-AdcsCertificationAuthority -Force `
+    -CAType EnterpriseRootCA `
+    -KeyLength 2048 `
+    -HashAlgorithm SHA256 `
+    -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" `
+    -DatabaseDirectory "C:\Windows\System32\CertLog" `
+    -LogDirectory "C:\Windows\System32\CertLog" `
+    -OverwriteExistingKey

@@ -3,8 +3,8 @@
 # Variables
 $IFNAME = "Ethernet 2"
 $NAME = "ws2-25-matthias.hogent"
-$USER = "Matthias"
-$PASS = "Password123"
+$USER = "Administrator"
+$PASS = "vagrant"
 $SECUREPASS = ConvertTo-SecureString $PASS -AsPlainText -Force
 $CREDENTIAL = New-Object System.Management.Automation.PSCredential("$USER@$NAME", $SECUREPASS)
 $SF = "C:\vagrant"

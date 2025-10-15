@@ -63,24 +63,22 @@ foreach ($GEBRUIKER in $GEBRUIKERS) {
     $FIRSTNAME = $GEBRUIKER.Voornaam
     $LASTNAME = $GEBRUIKER.Achternaam
     $USERNAME = $GEBRUIKER.Gebruikersnaam
-    $PASSWORD = $GEBRUIKER.Password
-    $OU = $GEBRUIKER.OU
-
+    $PASSWORD = ConvertTo-SecureString $GEBRUIKER.Password -AsPlainText -Force
+    $OU = "$($GEBRUIKER.OU),DC=ws2-25-matthias,DC=hogent"
 
     if (-not (Get-ADUser -F { SamAccountName -eq $USERNAME })) {
         New-ADUser `
-            -SamAccountName $USERNAME `
-            -UserPrincipalName "$USERNAME@$NAME" `
             -Name "$FIRSTNAME $LASTNAME" `
             -GivenName "$FIRSTNAME" `
             -Surname "$LASTNAME" `
-            -Displayname "$FIRSTNAME $LASTNAME" `
-            -AccountPassword (ConvertTo-SecureString $PASSWORD -AsPlainText -Force) -ChangePasswordAtLogon $False `
+            -SamAccountName $USERNAME `
+            -AccountPassword $PASSWORD `
+            -ChangePasswordAtLogon $False `
             -Path $OU `
             -Enabled $true
-        Write-Output "User '$USERNAME' created sucessfully."
+        Write-Output "User '$USERNAME' created successfully in $OU."
     }
     else {
-        Write-Host "User '$USERNAME' already exists."
+        Write-Output "User '$USERNAME' already exists."
     }
 }

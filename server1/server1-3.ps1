@@ -1,5 +1,7 @@
 # Config DHCP, DNS, AD
 
+# runas /user:ws2-25-matthias\Administrator
+
 # Varibles
 $GW = "192.168.25.1"
 $IP = "192.168.25.11"

@@ -53,9 +53,18 @@ $MountedDrive = $MountedDrives[0]
 Write-Output "Mounted ISO detected at drive: $MountedDrive`:"
 
 # Temp dir for setup
-Write-Host "Copying ISO file to temp directory."
-New-Item -Path "C:\" -Name "tempsql" -ItemType "Directory" -Force
-Copy-Item -Path $MountedDrive":\*" -Destination "C:\tempsql" -Recurse
+$TempDir = "$env:LOCALAPPDATA\Temp\SQLSetupTemp"
+Write-Host "Creating temp directory: $TempDir"
+New-Item -Path $TempDir -ItemType Directory -Force
+
+Write-Host "Copying ISO files to temp directory..."
+Copy-Item -Path "${MountedDrive}:\*" -Destination $TempDir -Recurse -Force
+
+# Setup path
+$setupPath = Join-Path $TempDir "setup.exe"
+
+Write-Output "Running SQL setup."
+Start-Process -FilePath $setupPath -ArgumentList "/ConfigurationFile=$configPath /Q" -Wait
 
 # Variables for SQL setup
 $setupPath = "C:\tempsql\setup.exe"

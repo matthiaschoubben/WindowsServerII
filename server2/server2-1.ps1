@@ -2,9 +2,9 @@
 
 # Variables
 $IFNAME = "Ethernet 2"
-$DNS = "192.168.25.11"
+$DNS = "192.168.25.10"
 $GW = "192.168.25.1"
-$IP = "192.168.25.21"
+$IP = "192.168.25.20"
 $SF = "C:\vagrant"
 $LOCALPATH = "C:\Users\Public\shared_folder"
 

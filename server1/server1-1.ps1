@@ -3,7 +3,7 @@
 # Variables
 $IFNAME = "Ethernet 2"
 $GW = "192.168.25.1"
-$IP = "192.168.25.11"
+$IP = "192.168.25.10"
 $SF = "C:\vagrant"
 $LOCALPATH = "C:\Users\Public\shared_folder"
 

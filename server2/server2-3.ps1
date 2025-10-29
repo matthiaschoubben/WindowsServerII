@@ -1,7 +1,7 @@
 # DNS and SQL server config
 
 # Variables
-$DNS = "192.168.25.11"
+$DNS = "192.168.25.10"
 $REVERSE_ZONE = "25.168.192.in-addr.arpa"
 $DOMAIN = "ws2-25-matthias.hogent"
 Copy-Item "Z:\enu_sql_server_2022_standard_edition_x64_dvd_43079f69.iso" "C:\SQL2022.iso"

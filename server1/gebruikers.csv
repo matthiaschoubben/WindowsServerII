@@ -1,0 +1,5 @@
+Voornaam;Achternaam;Gebruikersnaam;Password;OU
+Matthias;Schoubben;Matthias;Pass@123;OU=Domain Admins
+Gilles;De Meerler;Gilles;Pass@123;OU=Domain Admins
+Cristiano;Ronaldo;Ronaldo;Pass@123;OU=Domain Users
+Lionel;Messi;Messi;Pass@123;OU=Domain Users

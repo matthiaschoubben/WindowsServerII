@@ -1,40 +1,40 @@
-# # DNS and SQL server config
+# DNS and SQL server config
 
-# # Variables
-# $DNS = "192.168.25.10"
-# $REVERSE_ZONE = "25.168.192.in-addr.arpa"
-# $DOMAIN = "ws2-25-matthias.hogent"
+# Variables
+$DNS = "192.168.25.10"
+$REVERSE_ZONE = "25.168.192.in-addr.arpa"
+$DOMAIN = "ws2-25-matthias.hogent"
 
-# # Configure DNS
-# Write-Output "Configuring secondary DNS server."
-# # Configure the forward lookup zone
-# if (-not (Get-DnsServerZone -Name $DOMAIN -ErrorAction SilentlyContinue)) {
-#     Add-DnsServerSecondaryZone -Name $DOMAIN -MasterServers $DNS -ZoneFile "$DOMAIN.DNS"
-#     Write-Host "Forward lookup zone for $DOMAIN added successfully."
-# }
-# else {
-#     Write-Output "Forward lookup zone for $DOMAIN already exists. Skipping."
-# }
+# Configure DNS
+Write-Output "Configuring secondary DNS server."
+# Configure the forward lookup zone
+if (-not (Get-DnsServerZone -Name $DOMAIN -ErrorAction SilentlyContinue)) {
+    Add-DnsServerSecondaryZone -Name $DOMAIN -MasterServers $DNS -ZoneFile "$DOMAIN.DNS"
+    Write-Host "Forward lookup zone for $DOMAIN added successfully."
+}
+else {
+    Write-Output "Forward lookup zone for $DOMAIN already exists. Skipping."
+}
 
-# # Configure the reverse lookup zone
-# if (-not (Get-DnsServerZone -Name $REVERSE_ZONE -ErrorAction SilentlyContinue)) {
-#     Add-DnsServerSecondaryZone -Name $REVERSE_ZONE -MasterServers $DNS -ZoneFile "$REVERSE_ZONE.DNS"
-#     Write-Host "Reverse lookup zone for $REVERSE_ZONE added successfully."
-# }
-# else {
-#     Write-Output "Reverse lookup zone for $REVERSE_ZONE already exists. Skipping."
-# }
+# Configure the reverse lookup zone
+if (-not (Get-DnsServerZone -Name $REVERSE_ZONE -ErrorAction SilentlyContinue)) {
+    Add-DnsServerSecondaryZone -Name $REVERSE_ZONE -MasterServers $DNS -ZoneFile "$REVERSE_ZONE.DNS"
+    Write-Host "Reverse lookup zone for $REVERSE_ZONE added successfully."
+}
+else {
+    Write-Output "Reverse lookup zone for $REVERSE_ZONE already exists. Skipping."
+}
 
-# New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
+New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
 
+# Install SQL
 
-# --- VARIABELEN ---
-Write-Host "Setting variables..."
+# Variables
 $sqlSetupPath = "Z:\sql\enu_sql_server_2022_standard_edition_x64_dvd_43079f69\setup.exe"
 $sqlConfigFile = "Z:\sql\enu_sql_server_2022_standard_edition_x64_dvd_43079f69\sql_config.ini"
 $odbcPath = "C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\"
 
-# --- SQL SERVER INSTALLATIE ---
+# SQL server installation
 Write-Host "Starting SQL Server installation..."
 if ((Test-Path $sqlSetupPath) -and (Test-Path $sqlConfigFile)) {
     Write-Host "setup.exe and configuration file found, starting installation..."
@@ -46,7 +46,7 @@ else {
     exit 1
 }
 
-# --- PAD TOEVOEGEN ---
+# Add path
 Write-Host "Updating system PATH variable..."
 $currentPath = [Environment]::GetEnvironmentVariable("Path", "Machine")
 if ($currentPath -notlike "*$odbcPath*") {

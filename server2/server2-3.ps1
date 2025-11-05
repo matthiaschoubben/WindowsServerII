@@ -56,10 +56,10 @@ if ($currentPath -notlike "*$odbcPath*") {
 else {
     Write-Host "PATH already contains ODBC tools."
 }
+Install-Module -Name SqlServer -AllowClobber -Force
 
-Import-Module SqlServer
 
-$instanceName = "SERVER2"
+$instanceName = "server2"
 
 try {
     $wmi = Get-WmiObject -Namespace "root\Microsoft\SqlServer\ComputerManagement15" -Class "ServerNetworkProtocol" |

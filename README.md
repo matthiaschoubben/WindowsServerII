@@ -1,4 +1,7 @@
 # WindowsServerII
+
+# Notes
+sql_config.ini manueel aanmaken en instellen
  
 ## Stappenplan
 1. `vagrant up` in de WindowsServerII map

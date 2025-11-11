@@ -102,62 +102,62 @@ Install-AdcsCertificationAuthority -Force `
     -LogDirectory "C:\Windows\System32\CertLog" `
     -OverwriteExistingKey
 
-# Link CA to GPO
+# # Link CA to GPO
 
-Write-Host "Exporting CA root certificate..."
-# Get CA certificate from local machine store
-$CAStore = Get-ChildItem Cert:\LocalMachine\CA | Where-Object { $_.Subject -like "*ws2-25-matthias-SERVER1-CA*" } | Select-Object -First 1
-if (-not $CAStore) {
-    Write-Host "ERROR: No CA certificate found in LocalMachine\CA store." -ForegroundColor Red
-    exit 1
-}
+# Write-Host "Exporting CA root certificate..."
+# # Get CA certificate from local machine store
+# $CAStore = Get-ChildItem Cert:\LocalMachine\CA | Where-Object { $_.Subject -like "*ws2-25-matthias-SERVER1-CA*" } | Select-Object -First 1
+# if (-not $CAStore) {
+#     Write-Host "ERROR: No CA certificate found in LocalMachine\CA store." -ForegroundColor Red
+#     exit 1
+# }
 
-$CARootCertPath = "C:\ws2-25-matthias-SERVER1-CA_Root.cer"
+# $CARootCertPath = "C:\ws2-25-matthias-SERVER1-CA_Root.cer"
 
-# Export the CA certificate
-Export-Certificate -Cert $CAStore -FilePath $CARootCertPath -Force
-if (-not (Test-Path $CARootCertPath)) {
-    Write-Host "ERROR: Failed to export CA root certificate." -ForegroundColor Red
-    exit 1
-}
+# # Export the CA certificate
+# Export-Certificate -Cert $CAStore -FilePath $CARootCertPath -Force
+# if (-not (Test-Path $CARootCertPath)) {
+#     Write-Host "ERROR: Failed to export CA root certificate." -ForegroundColor Red
+#     exit 1
+# }
 
-Write-Host "Root certificate exported to $CARootCertPath"
+# Write-Host "Root certificate exported to $CARootCertPath"
 
-# Import Group Policy module
-Import-Module GroupPolicy
+# # Import Group Policy module
+# Import-Module GroupPolicy
 
-# GPO name
-$GPOName = "Trusted Root CA Distribution"
+# # GPO name
+# $GPOName = "Trusted Root CA Distribution"
 
-# Get or create the GPO
-$GPO = Get-GPO -Name $GPOName -ErrorAction SilentlyContinue
-if (-not $GPO) {
-    $GPO = New-GPO -Name $GPOName -Comment "Distributes and trusts the Enterprise Root CA"
-    Write-Host "Created new GPO: $GPOName"
-} else {
-    Write-Host "GPO '$GPOName' already exists, using it."
-}
+# # Get or create the GPO
+# $GPO = Get-GPO -Name $GPOName -ErrorAction SilentlyContinue
+# if (-not $GPO) {
+#     $GPO = New-GPO -Name $GPOName -Comment "Distributes and trusts the Enterprise Root CA"
+#     Write-Host "Created new GPO: $GPOName"
+# } else {
+#     Write-Host "GPO '$GPOName' already exists, using it."
+# }
 
-# Path to the GPO Trusted Root store in SYSVOL
-$Domain = (Get-ADDomain).DNSRoot
-$GPOGUID = $GPO.Id
-$PolicyStorePath = "\\$Domain\SYSVOL\$Domain\Policies\{$GPOGUID}\Machine\Microsoft\Public Key Policies\Trusted Root Certification Authorities"
+# # Path to the GPO Trusted Root store in SYSVOL
+# $Domain = (Get-ADDomain).DNSRoot
+# $GPOGUID = $GPO.Id
+# $PolicyStorePath = "\\$Domain\SYSVOL\$Domain\Policies\{$GPOGUID}\Machine\Microsoft\Public Key Policies\Trusted Root Certification Authorities"
 
-# Ensure the folder exists
-if (-not (Test-Path $PolicyStorePath)) {
-    New-Item -Path $PolicyStorePath -ItemType Directory -Force | Out-Null
-}
+# # Ensure the folder exists
+# if (-not (Test-Path $PolicyStorePath)) {
+#     New-Item -Path $PolicyStorePath -ItemType Directory -Force | Out-Null
+# }
 
-# Copy the CA root certificate into the GPO store
-Copy-Item -Path $CARootCertPath -Destination $PolicyStorePath -Force
-Write-Host "Root certificate copied to GPO Trusted Root store."
+# # Copy the CA root certificate into the GPO store
+# Copy-Item -Path $CARootCertPath -Destination $PolicyStorePath -Force
+# Write-Host "Root certificate copied to GPO Trusted Root store."
 
-# Link GPO to the domain root
-$DomainDN = (Get-ADDomain).DistinguishedName
-New-GPLink -Name $GPOName -Target $DomainDN -Enforced $true
-Write-Host "GPO '$GPOName' linked to domain: $DomainDN"
+# # Link GPO to the domain root
+# $DomainDN = (Get-ADDomain).DistinguishedName
+# New-GPLink -Name $GPOName -Target $DomainDN -Enforced $true
+# Write-Host "GPO '$GPOName' linked to domain: $DomainDN"
 
-# Force policy update
-Write-Host "Forcing Group Policy update..."
-gpupdate /force
-Write-Host "CA root certificate distribution via GPO completed successfully."
+# # Force policy update
+# Write-Host "Forcing Group Policy update..."
+# gpupdate /force
+# Write-Host "CA root certificate distribution via GPO completed successfully."

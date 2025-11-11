@@ -27,6 +27,9 @@ else {
 
 New-NetFirewallRule -DisplayName "Allow ICMPv4-In" -Protocol ICMPv4
 
+dnscmd /config /listenaddresses 192.168.25.20
+
+
 # Install SQL
 
 # Variables

@@ -33,8 +33,8 @@ dnscmd /config /listenaddresses 192.168.25.20
 # Install SQL
 
 # Variables
-$sqlSetupPath = "Z:\sql\enu_sql_server_2022_standard_edition_x64_dvd_43079f69\setup.exe"
-$sqlConfigFile = "Z:\sql\enu_sql_server_2022_standard_edition_x64_dvd_43079f69\sql_config.ini"
+$sqlSetupPath = "C:\Users\Public\shared_folder\sql\enu_sql_server_2022_standard_edition_x64_dvd_43079f69\setup.exe"
+$sqlConfigFile = "C:\Users\Public\shared_folder\sql\enu_sql_server_2022_standard_edition_x64_dvd_43079f69\sql_config.ini"
 $odbcPath = "C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\"
 
 # SQL server installation
@@ -97,5 +97,3 @@ else {
 
 
 
-# Write-Output "Restarting device to apply changes.""
-# Restart-Computer -Force

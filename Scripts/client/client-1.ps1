@@ -23,6 +23,4 @@ if (!(Test-Path $LOCALPATH)) {
 Copy-Item -Path $SF\* -Destination $LOCALPATH -Recurse -Force
 Write-Host "Shared folder successfully copied to $LOCALPATH."
 
-# Reboot
-Write-Host "Rebooting system to apply changes."
-Restart-Computer -Force
+

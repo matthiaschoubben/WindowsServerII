@@ -43,6 +43,18 @@ Vagrant.configure("2") do |config|
       # 2vCPU
       vb.cpus = "2"
     end
+    # Provisioning
+    server1.vm.provision "shell", path: "server1/server1-1.ps1"
+    server1.vm.provision "reload"
+
+    # server1.vm.provision "shell", path: "server1/server1-2.ps1"
+
+    # server1.vm.provision "shell",
+    #   path: "server1/server1-3.ps1",
+    #   privileged: true,
+    #   args: ["-ExecutionPolicy", "Bypass"],
+    #   env: { 'USERNAME' => 'ws2-25-matthias\\Administrator', 'PASSWORD' => 'vagrant' }
+    # server1.vm.provision "reload"
   end
 
   # Server 2
@@ -57,6 +69,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "3072"
       vb.cpus = "2"
     end
+    server2.vm.provision "shell", path: "server2/server2-1.ps1"
   end
 
   # Client
@@ -71,6 +84,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "2048"
       vb.cpus = "2"
     end
+    client.vm.provision "shell", path: "client/client1-1.ps1"
   end
 
   # Is Hyper-V volledig uitgeschakeld, maar krijg je nog steeds timeouts bij uitrollen van de client?

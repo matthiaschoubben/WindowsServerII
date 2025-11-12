@@ -2,7 +2,13 @@
 
 # runas /user:ws2-25-matthias\Administrator
 
-# Varibles
+Write-Host "Waiting for AD DS service to start..."
+while (-not (Get-Service adws -ErrorAction SilentlyContinue)) {
+    Start-Sleep -Seconds 10
+}
+Write-Host "AD DS is now available."
+
+# Variables
 $GW = "192.168.25.1"
 $IP = "192.168.25.10"
 $IP2 = "192.168.25.20"

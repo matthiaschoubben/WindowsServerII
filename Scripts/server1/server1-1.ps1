@@ -30,9 +30,6 @@ Write-Host "Installing required Windows features."
 Install-WindowsFeature -Name DHCP, AD-Domain-Services, DNS -IncludeManagementTools
 Write-Output "All required packages installed successfully."
 
-# Turn off firewall
-netsh advfirewall set all profiles state off
-
-# Reboot
-Write-Host "Rebooting system to apply changes."
-Restart-Computer -Force
+# Configure firewall
+Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled True
+New-NetFirewallRule -DisplayName "Allow SSH" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow

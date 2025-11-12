@@ -2,7 +2,7 @@
 
 # Variables
 $NAME = "ws2-25-matthias.hogent"
-$PASS = "Password123"
+$PASS = "Password@123"
 
 # Promote to dc
 Write-Output "Promoting server1 to domain controller"
@@ -13,3 +13,6 @@ Install-ADDSForest -DomainName $NAME `
     -SafeModeAdministratorPassword (ConvertTo-SecureString $PASS -AsPlainText -Force) `
     -Force
 Write-Host "SERVER1 successfully promoted to domain controller."
+
+Write-Output "Waiting for reboot to start..."
+Start-Sleep -Seconds 120

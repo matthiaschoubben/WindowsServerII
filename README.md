@@ -2,8 +2,13 @@
 
 # Notes
 sql_config.ini manueel aanmaken en instellen
+install vagrant-reload plugin
  
-## Stappenplan
+## Deployment Guide
+
+### Setup
+
+### Stappenplan
 1. `vagrant up` in de WindowsServerII map
 2. via VirtualBox inloggen op server1
 3. server1-1.ps1
@@ -23,3 +28,9 @@ sql_config.ini manueel aanmaken en instellen
 17. via VirtualBox inloggen op client
 18. client1-1.ps1
 19. client1-2.ps1
+
+### Gebruikers / Wachtwoorden
+
+## Project Status
+
+## Conclusie

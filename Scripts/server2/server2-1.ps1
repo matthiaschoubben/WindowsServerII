@@ -8,9 +8,6 @@ $IP = "192.168.25.20"
 $SF = "C:\vagrant"
 $LOCALPATH = "C:\Users\Public\shared_folder"
 
-# Open port 22 for SSH
-New-NetFirewallRule -DisplayName "Allow SSH" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
-
 # Static IP
 Write-Host "Configuring static IPv4"
 New-NetIPAddress -InterfaceAlias $IFNAME -IPAddress $IP -PrefixLength 24 -DefaultGateway $GW
@@ -31,6 +28,9 @@ Write-Host "Installing required Windows features."
 Install-WindowsFeature -Name DNS -IncludeManagementTools
 Write-Output "All required packages installed successfully."
 
-# Turn off firewall
-netsh advfirewall set all profiles state off
+# Configure firewall
+Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled True
+New-NetFirewallRule -DisplayName "Allow SSH" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
+New-NetFirewallRule -DisplayName "Allow SQL Server" -Direction Inbound -Protocol TCP -LocalPort 1433 -Action Allow
+New-NetFirewallRule -DisplayName "Allow SQL Browser" -Direction Inbound -Protocol UDP -LocalPort 1434 -Action Allow
 

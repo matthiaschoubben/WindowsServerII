@@ -1,6 +1,6 @@
 # Install RSAT and SQL SSMS
 
-Copy-Item "C:\Users\Public\shared_folder\sql\SSMS-Setup-ENU.exe" "C:\SSMS-Setup-ENU.exe"
+Copy-Item "C:\Users\Public\shared_folder\sql\enu_sql_server_2022_standard_edition_x64_dvd_43079f69\SSMS-Setup-ENU.exe" "C:\SSMS-Setup-ENU.exe"
 $SSMSInstallerPath = "C:\SSMS-Setup-ENU.exe"
 
 # Installing RSAT tools

@@ -7,9 +7,6 @@ $IP = "192.168.25.10"
 $SF = "C:\vagrant"
 $LOCALPATH = "C:\Users\Public\shared_folder"
 
-# Open port 22 for SSH
-New-NetFirewallRule -DisplayName "Allow SSH" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
-
 # Static IP
 Write-Host "Configuring static IPv4"
 New-NetIPAddress -InterfaceAlias $IFNAME -IPAddress $IP -PrefixLength 24 -DefaultGateway $GW
@@ -33,3 +30,5 @@ Write-Output "All required packages installed successfully."
 # Configure firewall
 Set-NetFirewallProfile -Profile Domain, Public, Private -Enabled True
 New-NetFirewallRule -DisplayName "Allow SSH" -Direction Inbound -Protocol TCP -LocalPort 22 -Action Allow
+New-NetFirewallRule -DisplayName "Allow AD DS core" -Direction Inbound -Protocol TCP -LocalPort 53,88,135,389,445,3268,3269 -Action Allow
+New-NetFirewallRule -DisplayName "Allow AD DS core UDP" -Direction Inbound -Protocol UDP -LocalPort 53,88,389 -Action Allow

@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
       vb.memory = "2048"
       vb.cpus = "2"
     end
-    client.vm.provision "shell", path: "client/client1-1.ps1"
+    # client.vm.provision "shell", path: "client/client-1.ps1", args: ["-ExecutionPolicy", "Bypass"]
   end
 
   # Is Hyper-V volledig uitgeschakeld, maar krijg je nog steeds timeouts bij uitrollen van de client?

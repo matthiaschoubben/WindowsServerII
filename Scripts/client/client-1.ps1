@@ -6,13 +6,17 @@ $SF = "C:\vagrant"
 $LOCALPATH = "C:\Users\Public\shared_folder"
 
 # Turn off firewall
-netsh advfirewall set all profiles state off
+netsh advfirewall set allprofiles state off
 
 # IP via DHCP
 Write-Output "Configuring DHCP settings..."
 netsh interface ip set address name=$IFNAME source=dhcp
 netsh interface ip set dns name=$IFNAME source=dhcp
 Write-Host "DHCP configuration complete."
+
+# Set domain adapter metric lower than NAT
+Set-NetIPInterface -InterfaceAlias $IFNAME -InterfaceMetric 10
+Set-NetIPInterface -InterfaceAlias "Ethernet" -InterfaceMetric 50
 
 # Copy shared folder locally
 Write-Output "Copying shared folder to the local path."

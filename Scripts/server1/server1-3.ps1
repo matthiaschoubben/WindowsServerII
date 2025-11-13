@@ -38,7 +38,7 @@ Add-DnsServerPrimaryZone -NetworkId $RANGE/24 -ZoneFile "$REVERSE.DNS" -DynamicU
 Write-Output "Reverse lookup zone $REVERSE created."
 
 # Disable DNS registration on all non-host-only adapters
-$HostOnlyPattern = "Ethernet" # Adjust to match your host-only adapter names
+$HostOnlyPattern = "Ethernet 2" # Adjust to match your host-only adapter names
 Get-NetAdapter | Where-Object { $_.Name -notlike $HostOnlyPattern } | ForEach-Object {
     Set-DnsClient -InterfaceAlias $_.Name -RegisterThisConnectionsAddress $false
 }
@@ -59,6 +59,8 @@ Write-Host "DNS PTR record for server2 added."
 dnscmd /ZoneResetSecondaries $NAME /SecureList $IP2
 dnscmd /ZoneResetSecondaries $REVERSE /SecureList $IP2
 Write-Output "Zone transfers configured."
+
+dnscmd /config /listenaddresses 192.168.25.10
 
 # Configure OU
 Write-Output "Configuring OU and user account."
@@ -101,12 +103,21 @@ Install-WindowsFeature -Name ADCS-Cert-Authority, ADCS-Web-Enrollment -IncludeMa
 Write-Host "Configuring Certification Authority."
 Install-AdcsCertificationAuthority -Force `
     -CAType EnterpriseRootCA `
+    -CACommonName "Server1-CA" `
     -KeyLength 2048 `
     -HashAlgorithm SHA256 `
     -CryptoProviderName "RSA#Microsoft Software Key Storage Provider" `
     -DatabaseDirectory "C:\Windows\System32\CertLog" `
     -LogDirectory "C:\Windows\System32\CertLog" `
     -OverwriteExistingKey
+
+Import-Module ADCSAdministration
+Import-Module WebAdministration
+
+Set-WebConfigurationProperty -Filter "/system.webServer/security/authentication/windowsAuthentication" -Name enabled -Value true -Location "Default Web Site/certsrv"
+Set-WebConfigurationProperty -Filter "/system.webServer/security/authentication/anonymousAuthentication" -Name enabled -Value true -Location "Default Web Site/certsrv"
+Set-WebConfigurationProperty -Filter "/system.webServer/security/access" -Name sslFlags -Value "None" -Location "Default Web Site/certsrv"
+
 
 # # Link CA to GPO
 
